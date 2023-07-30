@@ -6,22 +6,28 @@ class _Header extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return Column(
       children: [
-        const TodayText(),
-        const SizedBox(width: kSpacing),
-        Expanded(
-            child: SearchField(
-          onSearch: onSearch,
-        )),
+        Row(
+          children: [
+            Expanded(
+                child: SearchField(
+              onSearch: onSearch,
+            )),
+          ],
+        ),
+        const SizedBox(height: 20),
+        const ContactCard()
       ],
     );
   }
 
-  onSearch(value) {
+  onSearch(value) async {
     try {
-      print('SEARCHINFG HERE');
-      print(value);
+      final url = '${Network.searchNumber}$value';
+      final dio = Dio();
+      final response = await dio.get(url);
+      print(response);
     } catch (error) {}
   }
 }

@@ -2,6 +2,7 @@ library dashboard;
 
 import 'dart:developer';
 
+import 'package:dio/dio.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:number_lookup_web/app/constans/app_constants.dart';
@@ -16,12 +17,14 @@ import 'package:number_lookup_web/app/shared_components/project_card.dart';
 import 'package:number_lookup_web/app/shared_components/search_field.dart';
 import 'package:number_lookup_web/app/shared_components/selection_button.dart';
 import 'package:number_lookup_web/app/shared_components/task_card.dart';
-import 'package:number_lookup_web/app/shared_components/today_text.dart';
 import 'package:number_lookup_web/app/utils/helpers/app_helpers.dart';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:number_lookup_web/constants/network.dart';
+
+import '../../../../contact_info/contact_card.dart';
 
 // binding
 part '../../bindings/dashboard_binding.dart';
