@@ -30,20 +30,22 @@ class _HeaderState extends State<_Header> {
 
       await FirebaseService.update(
           {"enc": CryptService.encrypt(value)}, "Incoming", sessionId!);
-      final url = '${Network.searchNumber}$value';
-      final dio = Dio();
-      final response = await dio.get(url);
-      if (response.data != null) {
-        if (response.data['data'] != null) {
-          final numberInfo = NumberInfo();
-          numberInfo.name = response.data['data']['name'];
-          numberInfo.address = response.data['data']['address'];
-          numberInfo.carrier = response.data['data']['carrier'];
-          numberInfo.number = response.data['data']['number'];
-          _numberResult = numberInfo;
-          setState(() {});
-        }
-      }
-    } catch (error) {}
+      // final url = '${Network.searchNumber}$value';
+      // final dio = Dio();
+      // final response = await dio.get(url);
+      // if (response.data != null) {
+      //   if (response.data['data'] != null) {
+      //     final numberInfo = NumberInfo();
+      //     numberInfo.name = response.data['data']['name'];
+      //     numberInfo.address = response.data['data']['address'];
+      //     numberInfo.carrier = response.data['data']['carrier'];
+      //     numberInfo.number = response.data['data']['number'];
+      //     _numberResult = numberInfo;
+      //     setState(() {});
+      //   }
+      // }
+    } catch (error) {
+      print(error);
+    }
   }
 }
