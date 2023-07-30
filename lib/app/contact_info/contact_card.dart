@@ -1,15 +1,18 @@
 // Imports
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:number_lookup_web/app/models/number_info.dart';
 import 'package:number_lookup_web/constants/strings.dart';
 import '../constans/app_constants.dart';
 
 class ContactCard extends StatelessWidget {
-  const ContactCard({Key? key}) : super(key: key);
+  final NumberInfo numberInfo;
+  const ContactCard({required this.numberInfo, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    if (numberInfo.name == null) return const SizedBox.shrink();
+
     return Column(
       children: [
         Container(
@@ -20,8 +23,8 @@ class ContactCard extends StatelessWidget {
           child: Column(children: [
             Row(
               children: [
-                Text('identified by'),
-                SizedBox(width: 6),
+                const Text('identified by'),
+                const SizedBox(width: 6),
                 Text(
                   'Truecaller',
                   style: TextStyle(
@@ -30,40 +33,39 @@ class ContactCard extends StatelessWidget {
                 )
               ],
             ),
-            SizedBox(height: 10),
-            Row(
-              children: [
-                Text('Rahil Patel Lenditt', style: TextStyle(fontSize: 22)),
-              ],
-            ),
-            SizedBox(height: 15),
+            const SizedBox(height: 10),
+            Row(children: [
+              Text(numberInfo.name ?? '', style: const TextStyle(fontSize: 22)),
+            ]),
+            const SizedBox(height: 15),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Icon(EvaIcons.phone, size: 18, color: Colors.grey),
-                SizedBox(width: 6),
+                const Icon(EvaIcons.phone, size: 18, color: Colors.grey),
+                const SizedBox(width: 6),
                 Column(
                   children: [
-                    Text('Carrier - Airtel'),
-                    SizedBox(height: 4),
-                    Text('+91 1234567890', style: TextStyle(color: Colors.grey))
+                    Text('Carrier - ${numberInfo.carrier}'),
+                    const SizedBox(height: 4),
+                    Text(numberInfo.number ?? '',
+                        style: const TextStyle(color: Colors.grey))
                   ],
                 )
               ],
             ),
-            SizedBox(height: 6),
+            const SizedBox(height: 6),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Icon(EvaIcons.compass, size: 20, color: Colors.grey),
-                SizedBox(width: 6),
+                const Icon(EvaIcons.compass, size: 20, color: Colors.grey),
+                const SizedBox(width: 6),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Address'),
-                    SizedBox(height: 4),
-                    Text('Gujarat, India - Local time 18:20',
-                        style: TextStyle(color: Colors.grey))
+                    const Text('Address'),
+                    const SizedBox(height: 4),
+                    Text('${numberInfo.address} - Local time 18:20',
+                        style: const TextStyle(color: Colors.grey))
                   ],
                 )
               ],
@@ -71,10 +73,9 @@ class ContactCard extends StatelessWidget {
           ]),
         ),
         const Padding(
-          padding: EdgeInsets.only(top: 10),
-          child: Text(Strings.kModeratedTxt,
-              style: TextStyle(color: Colors.grey, fontSize: 12)),
-        )
+            padding: EdgeInsets.only(top: 10),
+            child: Text(Strings.kModeratedTxt,
+                style: TextStyle(color: Colors.grey, fontSize: 12)))
       ],
     );
   }

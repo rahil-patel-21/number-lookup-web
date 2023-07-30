@@ -6,6 +6,7 @@ import 'package:dio/dio.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:number_lookup_web/app/constans/app_constants.dart';
+import 'package:number_lookup_web/app/models/number_info.dart';
 import 'package:number_lookup_web/app/shared_components/chatting_card.dart';
 import 'package:number_lookup_web/app/shared_components/get_premium_card.dart';
 import 'package:number_lookup_web/app/shared_components/list_profil_image.dart';
