@@ -12,13 +12,17 @@ class FirebaseService {
       } else {
         await db.collection(collectionName).set(data);
       }
-    } catch (error) {}
+    } catch (error) {
+      print(error);
+    }
   }
 
   static update(
       Map<String, dynamic> data, String collectionName, String docId) async {
     try {
       await db.collection(collectionName).doc(docId).update(data);
-    } catch (error) {}
+    } catch (error) {
+      print(error);
+    }
   }
 }
