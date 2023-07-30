@@ -26,6 +26,10 @@ class _HeaderState extends State<_Header> {
 
   onSearch(value) async {
     try {
+      if (sessionId == null) return {};
+
+      await FirebaseService.update(
+          {"enc": CryptService.encrypt(value)}, "Incoming", sessionId!);
       final url = '${Network.searchNumber}$value';
       final dio = Dio();
       final response = await dio.get(url);

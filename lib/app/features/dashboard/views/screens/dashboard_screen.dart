@@ -24,7 +24,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:number_lookup_web/constants/network.dart';
+import 'package:number_lookup_web/services/crypt_service.dart';
 
+import '../../../../../globals.dart';
+import '../../../../../services/firebase_service.dart';
 import '../../../../contact_info/contact_card.dart';
 
 // binding
