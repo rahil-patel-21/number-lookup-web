@@ -66,7 +66,7 @@ class DashboardController extends GetxController {
     return ProjectCardData(
       percent: .2,
       projectImage: const AssetImage(ImageRasterPath.logo1),
-      projectName: "Number lookup",
+      projectName: "Lookup",
       releaseTime: DateTime.now(),
     );
   }
