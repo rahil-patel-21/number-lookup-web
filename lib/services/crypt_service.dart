@@ -42,7 +42,7 @@ class CryptService {
 
     var keyBtyes = concatenatedHashes.sublist(0, 32);
     var ivBtyes = concatenatedHashes.sublist(32, 48);
-    return new Tuple2(keyBtyes, ivBtyes);
+    return Tuple2(keyBtyes, ivBtyes);
   }
 
   static Uint8List createUint8ListFromString(String s) {
