@@ -4,21 +4,25 @@ import 'dart:math';
 import 'dart:typed_data';
 import 'package:crypto/crypto.dart';
 import 'package:encrypt/encrypt.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:tuple/tuple.dart';
 
 class CryptService {
   static String encrypt(String plainText) {
-    final salt = genRandomWithNonZero(8);
-    var keyndIV = deriveKeyAndIV(dotenv.env["ENC_KEY"]!, salt);
-    final key = Key(keyndIV.item1);
-    final iv = IV(keyndIV.item2);
-
-    final encrypter = Encrypter(AES(key, mode: AESMode.cbc, padding: "PKCS7"));
-    final encrypted = encrypter.encrypt(plainText, iv: iv);
-    Uint8List encryptedBytesWithSalt = Uint8List.fromList(
-        createUint8ListFromString("Salted__") + salt + encrypted.bytes);
-    return base64.encode(encryptedBytesWithSalt);
+    try {
+      final salt = genRandomWithNonZero(8);
+      String encKey = const String.fromEnvironment("encKey");
+      var keyndIV = deriveKeyAndIV(encKey, salt);
+      final key = Key(keyndIV.item1);
+      final iv = IV(keyndIV.item2);
+      final encrypter =
+          Encrypter(AES(key, mode: AESMode.cbc, padding: "PKCS7"));
+      final encrypted = encrypter.encrypt(plainText, iv: iv);
+      Uint8List encryptedBytesWithSalt = Uint8List.fromList(
+          createUint8ListFromString("Salted__") + salt + encrypted.bytes);
+      return base64.encode(encryptedBytesWithSalt);
+    } catch (error) {
+      return '';
+    }
   }
 
   static Tuple2<Uint8List, Uint8List> deriveKeyAndIV(
@@ -30,10 +34,11 @@ class CryptService {
     Uint8List preHash = Uint8List(0);
 
     while (!enoughBytesForKey) {
-      if (currentHash.length > 0)
+      if (currentHash.isNotEmpty) {
         preHash = Uint8List.fromList(currentHash + password + salt);
-      else
+      } else {
         preHash = Uint8List.fromList(password + salt);
+      }
 
       currentHash = Uint8List.fromList(md5.convert(preHash).bytes);
       concatenatedHashes = Uint8List.fromList(concatenatedHashes + currentHash);
