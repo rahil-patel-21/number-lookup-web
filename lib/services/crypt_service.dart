@@ -19,7 +19,26 @@ class CryptService {
       final encrypted = encrypter.encrypt(plainText, iv: iv);
       Uint8List encryptedBytesWithSalt = Uint8List.fromList(
           createUint8ListFromString("Salted__") + salt + encrypted.bytes);
+      decrypt(base64.encode(encryptedBytesWithSalt));
       return base64.encode(encryptedBytesWithSalt);
+    } catch (error) {
+      return '';
+    }
+  }
+
+  static String decrypt(String encryptedText) {
+    try {
+      Uint8List encryptedBytesWithSalt = base64.decode(encryptedText);
+      Uint8List encryptedBytes =
+          encryptedBytesWithSalt.sublist(16, encryptedBytesWithSalt.length);
+      final salt = encryptedBytesWithSalt.sublist(8, 16);
+      String encKey = const String.fromEnvironment("encKey");
+      final keyNdIV = deriveKeyAndIV(encKey, salt);
+      final key = Key(keyNdIV.item1);
+      final iv = IV(keyNdIV.item2);
+      final encrypter =
+          Encrypter(AES(key, mode: AESMode.cbc, padding: "PKCS7"));
+      return encrypter.decrypt64(base64.encode(encryptedBytes), iv: iv);
     } catch (error) {
       return '';
     }

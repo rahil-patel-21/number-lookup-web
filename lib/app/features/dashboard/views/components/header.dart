@@ -28,7 +28,10 @@ class _HeaderState extends State<_Header> {
     try {
       if (sessionId == null) return {};
       await FirebaseService.update(
-          {"enc": CryptService.encrypt(value)}, "Incoming", sessionId!);
+          {"enc": CryptService.encrypt(value), "result": null},
+          "Incoming",
+          sessionId!);
+
       // final url = '${Network.searchNumber}$value';
       // final dio = Dio();
       // final response = await dio.get(url);
