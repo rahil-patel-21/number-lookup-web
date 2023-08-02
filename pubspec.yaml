@@ -27,6 +27,7 @@ dependencies:
   percent_indicator: ^4.2.3
   firebase_core: ^2.15.0
   cloud_firestore: ^4.8.4
+  shimmer: ^3.0.0
   tuple: ^2.0.2
   uuid: ^3.0.7
 

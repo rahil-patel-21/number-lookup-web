@@ -10,6 +10,7 @@ class _Header extends StatefulWidget {
 
 class _HeaderState extends State<_Header> {
   NumberInfo _numberResult = NumberInfo();
+  bool _isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +20,8 @@ class _HeaderState extends State<_Header> {
           children: [Expanded(child: SearchField(onSearch: onSearch))],
         ),
         const SizedBox(height: 20),
-        ContactCard(numberInfo: _numberResult)
+        ContactCard(numberInfo: _numberResult),
+        if (_isLoading) ContactCardLoader()
       ],
     );
   }
@@ -32,20 +34,8 @@ class _HeaderState extends State<_Header> {
           "Incoming",
           sessionId!);
 
-      // final url = '${Network.searchNumber}$value';
-      // final dio = Dio();
-      // final response = await dio.get(url);
-      // if (response.data != null) {
-      //   if (response.data['data'] != null) {
-      //     final numberInfo = NumberInfo();
-      //     numberInfo.name = response.data['data']['name'];
-      //     numberInfo.address = response.data['data']['address'];
-      //     numberInfo.carrier = response.data['data']['carrier'];
-      //     numberInfo.number = response.data['data']['number'];
-      //     _numberResult = numberInfo;
-      //     setState(() {});
-      //   }
-      // }
+      _isLoading = true;
+      setState(() {});
     } catch (error) {
       print(error);
     }
