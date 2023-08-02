@@ -1,4 +1,5 @@
 // Imports
+import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:number_lookup_web/services/firebase_service.dart';
 import 'app/config/routes/app_pages.dart';
 import 'app/config/themes/app_theme.dart';
@@ -14,6 +15,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  await FirebaseAppCheck.instance.activate();
   runApp(const MyApp());
   // Creating new session
   sessionId = const Uuid().v4();
