@@ -19,22 +19,7 @@ void main() async {
   runApp(const MyApp());
   // Creating new session
   sessionId = const Uuid().v4();
-  listenForChanges();
-}
-
-listenForChanges() async {
-  try {
-    await FirebaseService.create({}, "Incoming", docId: sessionId);
-
-    final docRef = db.collection("Incoming").doc(sessionId);
-    docRef.snapshots().listen((event) {
-      if (event.data() != null) {
-        print("current data: ${event.data()}");
-      }
-    });
-  } catch (error) {
-    print(error);
-  }
+  await FirebaseService.create({}, "Incoming", docId: sessionId);
 }
 
 class MyApp extends StatelessWidget {

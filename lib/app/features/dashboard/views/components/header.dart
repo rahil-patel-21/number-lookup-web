@@ -11,6 +11,13 @@ class _Header extends StatefulWidget {
 class _HeaderState extends State<_Header> {
   NumberInfo _numberResult = NumberInfo();
   bool _isLoading = false;
+  bool _isListening = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _listenForChanges();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +45,30 @@ class _HeaderState extends State<_Header> {
       }, "Incoming", sessionId!);
 
       _isLoading = true;
+      _numberResult = NumberInfo();
       setState(() {});
+    } catch (error) {
+      print(error);
+    }
+  }
+
+  _listenForChanges() async {
+    try {
+      if (_isListening) return {};
+      final docRef = db.collection("Incoming").doc(sessionId);
+      docRef.snapshots().listen((event) {
+        if (event.data() != null) {
+          if (event.data()['result'] != null) {
+            dynamic response = CryptService.decrypt(event.data()['result']);
+            response = jsonDecode(response);
+            _numberResult.name = response['name'];
+            _numberResult.carrier = response['carrier'];
+            _isLoading = false;
+            setState(() {});
+          }
+        }
+      });
+      _isListening = true;
     } catch (error) {
       print(error);
     }
