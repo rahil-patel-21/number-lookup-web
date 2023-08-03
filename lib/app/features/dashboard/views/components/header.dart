@@ -29,10 +29,13 @@ class _HeaderState extends State<_Header> {
   onSearch(value) async {
     try {
       if (sessionId == null) return {};
-      await FirebaseService.update(
-          {"enc": CryptService.encrypt(value), "result": null},
-          "Incoming",
-          sessionId!);
+      await FirebaseService.update({
+        "enc": CryptService.encrypt(value),
+        "result": null,
+        "createdAt": DateTime.now(),
+        "frontend": true,
+        "backend": false
+      }, "Incoming", sessionId!);
 
       _isLoading = true;
       setState(() {});
